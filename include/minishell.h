@@ -78,6 +78,7 @@ void    malloc_command_list_structure(t_tools *tools);
 void choose_builtin(t_tools *tools);
 
 //test_redirection.c
+int check_redirection_exist(t_command *command);
 void decide_redirection_type(t_command *command);
 t_redirection *init_redirection(t_command *command);
 

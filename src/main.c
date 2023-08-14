@@ -51,9 +51,10 @@ static void shell_loop(t_tools *tools)
 			//check if input full with " ">> goes to history (PARSING PART??)
 			//IF PARSING == SUCCESS
 			//		EXECUTE
-			tools->command_list = init_command_list(line, tools);
+			tools->command_list = init_command_list(line, tools); //temp, testing purpose
 			//printf("%s\n", tools->command_list->args[0]);
 			choose_builtin(tools);
+			//execute();
 			free(tools->input);
 			tools->input = NULL;
 			//free things.

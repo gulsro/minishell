@@ -24,7 +24,7 @@
 // }
 
 
-static int check_redir_exist(t_command *command)
+int check_redirection_exist(t_command *command)
 {
 	int i;
 
@@ -71,7 +71,7 @@ t_redirection *init_redirection(t_command *command)
 {
 	t_redirection *redirection;
 
-	if (check_redir_exist(command) == 0)
+	if (check_redirection_exist(command) == 0)
 	{
 		command->redirection = NULL;
 		return (NULL);
