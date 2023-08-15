@@ -17,7 +17,7 @@ int is_builtin(t_command *command)
 /*
 **	simple_command_exec() handles execution of a single command without pipe.
 */
-void simple_command_exec(t_tools *tools)
+void execute_simple_command(t_tools *tools)
 {
 	t_command *command;
 	pid_t p1;
@@ -29,7 +29,7 @@ void simple_command_exec(t_tools *tools)
 	else if (p1 == 0)
 	{
 		redirection(command);
-		execute_child
+		execute_child(tools);
 	}
 }
 

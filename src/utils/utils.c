@@ -16,7 +16,7 @@ char *protect(char *arg)
 	{
 		perror("Error"); // so that the error message based on errno will be printed
 		glob_exit_status = 1;
-		exit(1);
+		return (NULL);
 	}
 	return (arg);
 }
