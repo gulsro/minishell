@@ -147,6 +147,8 @@ t_command   *ft_lstnew_command(char **dup);
 int find_equal_sign(char *arg);
 int check_arg_digit(char *arg);
 
+
+//EXECUTE
 //redirections.c
 void protected_dup2(int old_fd, int new_fd);
 int input_redirection(t_redirection *redirection);
@@ -155,6 +157,25 @@ int redirection(t_command *command);
 
 //heredoc.c
 int here_document(t_redirection *redirection);
+
+//execute.c
+int is_builtin(t_command *command);
+void execute_simple_command(t_tools *tools);
+void execute(t_tools *tools);
+
+//execute_child.c
+char *join_command_to_path(char *path, char *main_command);
+char **get_paths(t_tools *tools);
+int execute_child(t_tools *tools);
+
+//EXPAND
+//expand_dollar_sign.c
+int check_first_char_dollar(char *string);
+char *expand_string(char *string, t_tools *tools);
+
+
+
+
 
 
 #endif

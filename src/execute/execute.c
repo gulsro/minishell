@@ -46,5 +46,8 @@ void execute(t_tools *tools)
 			execute_simple_command(command_list);
 	}
 	else
-		//pipelines()
+	{
+		printf("here pipes need to be execute()\n");
+		return ;
+	}
 }

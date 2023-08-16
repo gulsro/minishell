@@ -42,6 +42,7 @@ SRCS 	:=	src/main.c \
 			src/execute/redirections.c \
 			src/execute/heredoc.c \
 			src/execute/execute.c \
+			src/expand/expand_dollar_sign.c \
 			src/utils/utils.c
 
 #SRCS	:= ${SRCS:%=./src/%}

@@ -58,5 +58,7 @@ int execute_child(t_tools *tools)
 		free(full_path_command);
 		i++;
 	}
-
+	//free all
+	//exit code?
+	error_exit("child exec bad", 1);
 }
