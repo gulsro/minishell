@@ -166,7 +166,7 @@ void execute(t_tools *tools);
 //execute_child.c
 char *join_command_to_path(char *path, char *main_command);
 char **get_paths(t_tools *tools);
-int execute_child(t_tools *tools);
+void execute_child(t_tools *tools);
 
 //EXPAND
 //expand_dollar_sign.c

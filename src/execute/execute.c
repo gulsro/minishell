@@ -20,6 +20,7 @@ int is_builtin(t_command *command)
 void execute_simple_command(t_tools *tools)
 {
 	t_command *command;
+	int exit_code;
 	pid_t p1;
 	
 	command = tools->command_list;
@@ -31,19 +32,24 @@ void execute_simple_command(t_tools *tools)
 		redirection(command);
 		execute_child(tools);
 	}
+	else
+	{
+		waitpid(p1, &exit_code, 0);
+		glob_exit_status = exit_code;
+	}
 }
 
 void execute(t_tools *tools)
 {
 	t_command *command_list;
 
-	command->list = tools->command_list;
-	if (tools->number_of_pipes == 1)
+	command_list = tools->command_list;
+	if (tools->number_of_pipes == 0)
 	{
 		if (is_builtin(command_list) == 1)
 			choose_builtin(tools);
 		else
-			execute_simple_command(command_list);
+			execute_simple_command(tools);
 	}
 	else
 	{

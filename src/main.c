@@ -37,7 +37,7 @@ static void shell_loop(t_tools *tools)
 
 	while (1)
 	{
-		line = readline("minishell: "); //caller must free it when finished
+		line = readline("MINISHELL&: "); //caller must free it when finished
 		//check if input == NULL>> doesnt go to history
 		if (line == NULL) // means it encounters EOF, ctrl-D
 		{
@@ -53,8 +53,11 @@ static void shell_loop(t_tools *tools)
 			//		EXECUTE
 			tools->command_list = init_command_list(line, tools); //temp, testing purpose
 			//printf("%s\n", tools->command_list->args[0]);
-			choose_builtin(tools);
-			//execute();
+			//choose_builtin(tools);
+			execute(tools);
+			//printf("EXEC FINISH\n");
+			// free(tools->command_list);
+			// tools->command_list = NULL;
 			free(tools->input);
 			tools->input = NULL;
 			//free things.

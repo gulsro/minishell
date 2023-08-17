@@ -14,8 +14,8 @@ int check_first_char_dollar(char *string)
 char *expand_string(char *string, t_tools *tools)
 {
 	t_command	*command;
+	t_env_node	*temp;
 	char		*return_val;
-	int			i;
 
 	command = tools->command_list;
 	if (ft_strsame(string, "$?") == 1)
@@ -23,15 +23,15 @@ char *expand_string(char *string, t_tools *tools)
 		return_val = ft_itoa(glob_exit_status); //MALLOCCC
 		return (return_val);
 	}
-	i = 0;
-	while (tools->env_list[i] != NULL)
+	temp = tools->env_list;
+	while (temp != NULL)
 	{
-		if (ft_strsame(string + 1, tools->env_list[i]->key) == 1)
+		if (ft_strsame(string + 1, temp->key) == 1)
 		{
-			return_val = get_value_from_env_node(tools->env_list[i]->key, tools->env_list); //MALLOCCC
+			return_val = get_value_from_env_node(temp->key, tools->env_list); //MALLOCCC
 			return (return_val);
 		}
-		i++;
+		temp = temp->next;
 	}
 	return (NULL);
 }

@@ -21,7 +21,7 @@ char **get_paths(t_tools *tools)
 	char *path_str;
 	int i;
 
-	i = 0
+	i = 0;
 	path_str = get_value_from_env_node("PATH", tools->env_list); //MALLOC
 	if (path_str == NULL)
 		return(ft_putendl_fd("Path can not be found", STDERR_FILENO), NULL);
@@ -36,7 +36,7 @@ char **get_paths(t_tools *tools)
 **	execute_child() first searchs the command in current directory. 
 **	If finds, does execution, otherwise it searchs the command in PATH
 */
-int execute_child(t_tools *tools)
+void execute_child(t_tools *tools)
 {
 	t_command *command;
 	char **path_arr;
@@ -51,13 +51,16 @@ int execute_child(t_tools *tools)
 	while (path_arr[i] != NULL)
 	{
 		full_path_command = join_command_to_path(path_arr[i], command->args[0]);
+		printf("%s\n", full_path_command);
 		if (full_path_command == NULL)
 			error_exit("execute_child failed", 1);
 		if (access(full_path_command, F_OK) == 0)
-			execve(command->args[0], command->args, tools->env);
+			break ;
 		free(full_path_command);
 		i++;
 	}
+	execve(full_path_command, command->args, tools->env);
+	free(full_path_command);
 	//free all
 	//exit code?
 	error_exit("child exec bad", 1);
