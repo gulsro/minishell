@@ -36,7 +36,7 @@ char **get_paths(t_tools *tools)
 **	execute_child() first searchs the command in current directory. 
 **	If finds, does execution, otherwise it searchs the command in PATH
 */
-void execute_child(t_tools *tools)
+int execute_child(t_tools *tools)
 {
 	t_command *command;
 	char **path_arr;
@@ -51,7 +51,7 @@ void execute_child(t_tools *tools)
 	while (path_arr[i] != NULL)
 	{
 		full_path_command = join_command_to_path(path_arr[i], command->args[0]);
-		printf("%s\n", full_path_command);
+		//printf("%s\n", full_path_command);
 		if (full_path_command == NULL)
 			error_exit("execute_child failed", 1);
 		if (access(full_path_command, F_OK) == 0)
@@ -59,9 +59,15 @@ void execute_child(t_tools *tools)
 		free(full_path_command);
 		i++;
 	}
+	if (path_arr[i] == NULL)
+	{
+		error_exit("command not found", 127);
+		return glob_exit_status;
+	}
 	execve(full_path_command, command->args, tools->env);
 	free(full_path_command);
 	//free all
 	//exit code?
 	error_exit("child exec bad", 1);
+	return (1);
 }

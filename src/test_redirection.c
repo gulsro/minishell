@@ -41,17 +41,17 @@ int check_redirection_exist(t_command *command)
 	return (0);
 }
 
-void decide_redirection_type(t_command *command)
+void decide_redirection_type(t_redirection *redirection)
 {
-	t_redirection *redirection;
+	//printf("KIJJJJK token_type = %s\n", redirection->token_name);
 
-	redirection = command->redirection;
 	if (ft_strsame(redirection->token_name, "<") == 1)
 	{
 		redirection->type = LESS;
 	}
 	if (ft_strsame(redirection->token_name, ">") == 1)
 	{
+	//	printf("LELLLO\n");
 		redirection->type = GREAT;
 	}
 	if (ft_strsame(redirection->token_name, ">>") == 1)
@@ -71,17 +71,24 @@ t_redirection *init_redirection(t_command *command)
 {
 	t_redirection *redirection;
 
+	redirection = command->redirection;
 	if (check_redirection_exist(command) == 0)
 	{
-		command->redirection = NULL;
+		redirection = NULL;
 		return (NULL);
 	}
 	redirection = (t_redirection *)malloc(sizeof(t_redirection));
 	if (redirection == NULL)
 		return (NULL);
-	redirection->file_name = ft_strdup(command->args[2]); //***
-	redirection->token_name = ft_strdup(command->args[1]);
-	decide_redirection_type(command);
+	//printf("A\n");
+	redirection->file_name = ft_strdup(command->args[3]); //***
+	//printf("B\n");
+	redirection->token_name = ft_strdup(command->args[2]);
+	//printf("token_type = %s\n", redirection->token_name);
+	//printf("C\n");
+	decide_redirection_type(redirection);
+	//printf("redir_type = %d\n", redirection->type);
+	//printf("D\n");
 	redirection->next = NULL;
 	return (redirection);
 }

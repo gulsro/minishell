@@ -37,7 +37,7 @@ static void shell_loop(t_tools *tools)
 
 	while (1)
 	{
-		line = readline("MINISHELL&: "); //caller must free it when finished
+		line = readline("\033[0;35m----->\033[1;36mMINISHELL&: \033[1;33m"); //caller must free it when finished
 		//check if input == NULL>> doesnt go to history
 		if (line == NULL) // means it encounters EOF, ctrl-D
 		{
@@ -61,6 +61,7 @@ static void shell_loop(t_tools *tools)
 			free(tools->input);
 			tools->input = NULL;
 			//free things.
+			//printf("--------");
 		}
 	}
 }

@@ -79,7 +79,7 @@ void choose_builtin(t_tools *tools);
 
 //test_redirection.c
 int check_redirection_exist(t_command *command);
-void decide_redirection_type(t_command *command);
+void decide_redirection_type(t_redirection *redirection);
 t_redirection *init_redirection(t_command *command);
 
 
@@ -166,7 +166,7 @@ void execute(t_tools *tools);
 //execute_child.c
 char *join_command_to_path(char *path, char *main_command);
 char **get_paths(t_tools *tools);
-void execute_child(t_tools *tools);
+int execute_child(t_tools *tools);
 
 //EXPAND
 //expand_dollar_sign.c
