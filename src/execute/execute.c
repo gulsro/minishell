@@ -47,7 +47,10 @@ void execute(t_tools *tools)
 	if (tools->number_of_pipes == 0)
 	{
 		if (is_builtin(command_list) == 1)
+		{
+			redirection(command_list);
 			choose_builtin(tools);
+		}
 		else
 			execute_simple_command(tools);
 	}

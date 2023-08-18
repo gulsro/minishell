@@ -81,9 +81,9 @@ t_redirection *init_redirection(t_command *command)
 	if (redirection == NULL)
 		return (NULL);
 	//printf("A\n");
-	redirection->file_name = ft_strdup(command->args[3]); //***
+	redirection->file_name = ft_strdup(command->args[2]); //***
 	//printf("B\n");
-	redirection->token_name = ft_strdup(command->args[2]);
+	redirection->token_name = ft_strdup(command->args[1]);
 	//printf("token_type = %s\n", redirection->token_name);
 	//printf("C\n");
 	decide_redirection_type(redirection);

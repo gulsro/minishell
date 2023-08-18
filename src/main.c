@@ -52,7 +52,6 @@ static void shell_loop(t_tools *tools)
 			//IF PARSING == SUCCESS
 			//		EXECUTE
 			tools->command_list = init_command_list(line, tools); //temp, testing purpose
-			//printf("%s\n", tools->command_list->args[0]);
 			//choose_builtin(tools);
 			execute(tools);
 			//printf("EXEC FINISH\n");
