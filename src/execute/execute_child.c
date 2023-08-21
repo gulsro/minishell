@@ -32,6 +32,33 @@ char **get_paths(t_tools *tools)
 	return (path_arr);
 }
 
+static char *try_access_path(t_command *command, char **path_arr)
+{
+	int	i;
+	char *full_path_command;
+	char *current_dir;
+
+	i = 0;
+	current_dir = ft_strjoin(command->args[0], "./");
+	if (current_dir == NULL)
+		return NULL;  // ?????
+	if (access(current_dir, F_OK) == 0)
+	{
+		return (current_dir);
+	}
+	while (path_arr[i] != NULL)
+	{
+		full_path_command = join_command_to_path(path_arr[i], command->args[0]);
+		//printf("%s\n", full_path_command);
+		if (full_path_command == NULL)
+			error_exit("execute_child failed", 1);
+		if (access(full_path_command, F_OK) == 0)
+			return (full_path_command);
+		free(full_path_command);
+		i++;
+	}
+	return (NULL);
+}
 /*
 **	execute_child() first searchs the command in current directory. 
 **	If finds, does execution, otherwise it searchs the command in PATH
@@ -41,25 +68,24 @@ int execute_child(t_tools *tools)
 	t_command *command;
 	char **path_arr;
 	char *full_path_command;
-	int i;
+//	int i;
 
-	i = 0;
+//	i = 0;
 	command = tools->command_list;
-	if (access(command->args[0], F_OK) == 0)
-		execve(command->args[0], command->args, tools->env);
 	path_arr = get_paths(tools);
-	while (path_arr[i] != NULL)
-	{
-		full_path_command = join_command_to_path(path_arr[i], command->args[0]);
-		//printf("%s\n", full_path_command);
-		if (full_path_command == NULL)
-			error_exit("execute_child failed", 1);
-		if (access(full_path_command, F_OK) == 0)
-			break ;
-		free(full_path_command);
-		i++;
-	}
-	if (path_arr[i] == NULL)
+	full_path_command = try_access_path(command, path_arr);
+	// while (path_arr[i] != NULL)
+	// {
+	// 	full_path_command = join_command_to_path(path_arr[i], command->args[0]);
+	// 	//printf("%s\n", full_path_command);
+	// 	if (full_path_command == NULL)
+	// 		error_exit("execute_child failed", 1);
+	// 	if (access(full_path_command, F_OK) == 0)
+	// 		break ;
+	// 	free(full_path_command);
+	// 	i++;
+	// }
+	if (full_path_command == NULL)
 	{
 		error_exit("command not found", 127);
 		return glob_exit_status;
