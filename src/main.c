@@ -13,6 +13,20 @@
 
 int glob_exit_status = 0;
 
+static int count_pipes(char **argv)
+{
+	int count;
+
+	count = 0;
+	while (*argv)
+	{
+		if (ft_strsame(*argv, "|") == 1)
+			count++;
+		(*argv)++;
+	}
+	return (count);
+}
+
 static t_tools *init_tools(int argc, char **argv, char **env)
 {
 	t_tools *tools;
@@ -27,7 +41,7 @@ static t_tools *init_tools(int argc, char **argv, char **env)
 	tools->env = array_dup(env); //MALLOC
 	tools->env_list = init_env_linked_list(env);
 	//init_command_structure(argc, argv, tools);
-	tools->number_of_pipes = 0;
+	tools->number_of_pipes = count_pipes(argv);
 	return (tools);
 }
 

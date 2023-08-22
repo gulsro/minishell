@@ -160,13 +160,18 @@ int here_document(t_redirection *redirection);
 
 //execute.c
 int is_builtin(t_command *command);
-void execute_simple_command(t_tools *tools);
+void execute_without_pipe(t_tools *tools);
 void execute(t_tools *tools);
 
-//execute_child.c
+//execute_utils.c
 char *join_command_to_path(char *path, char *main_command);
 char **get_paths(t_tools *tools);
-int execute_child(t_tools *tools);
+int execute_single_command(t_tools *tools, t_command *command);
+
+//handle_pipes.c
+void handle_pipes(t_tools *tools);
+int single_execution_in_pipe(t_tools *tools, t_command *command, int fd_input, int fd[]);
+
 
 //EXPAND
 //expand_dollar_sign.c

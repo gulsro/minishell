@@ -17,7 +17,7 @@ int is_builtin(t_command *command)
 /*
 **	simple_command_exec() handles execution of a single command without pipe.
 */
-void execute_simple_command(t_tools *tools)
+void execute_without_pipe(t_tools *tools)
 {
 	t_command *command;
 	int exit_code;
@@ -30,7 +30,7 @@ void execute_simple_command(t_tools *tools)
 	else if (p1 == 0)
 	{
 		redirection(command);
-		execute_child(tools);
+		execute_single_command(tools, command);
 	}
 	else
 	{
@@ -52,12 +52,13 @@ void execute(t_tools *tools)
 			choose_builtin(tools);
 		}
 		else
-			execute_simple_command(tools);
+			execute_without_pipe(tools);
 	}
 	else
 	{
-		//multiple_pipes()
-		printf("here pipes need to be execute()\n");
+		printf("A\n");
+		handle_pipes(tools);
+		//printf("here pipes need to be execute()\n");
 		return ;
 	}
 }

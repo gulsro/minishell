@@ -42,7 +42,8 @@ SRCS 	:=	src/main.c \
 			src/execute/redirections.c \
 			src/execute/heredoc.c \
 			src/execute/execute.c \
-			src/execute/execute_child.c \
+			src/execute/execute_utils.c \
+			src/execute/handle_pipes.c \
 			src/expand/expand_dollar_sign.c \
 			src/utils/utils.c
 
