@@ -71,14 +71,16 @@ typedef struct s_env_node
 //main.c
 
 
-//test_builtin.c
+//test.c
 void    init_command_structure(int argc, char **argv, t_tools *tools);
 t_command *init_command_list(char *line, t_tools *tools);
 void    malloc_command_list_structure(t_tools *tools);
-void choose_builtin(t_tools *tools);
+char **copy_content_until_pipe(char **args, int pipe_index_position);
+int count_pipes(char **argv);
 
 //test_redirection.c
-int check_redirection_exist(t_command *command);
+//int check_redirection_exist(t_command *command);
+int check_redirection_exist(char **command_args);
 void decide_redirection_type(t_redirection *redirection);
 t_redirection *init_redirection(t_command *command);
 
@@ -103,14 +105,16 @@ void env_list_free(t_env_node *env_list);
 void print_value(char *key, t_tools *tools);
 int check_key_exist(char *key, t_env_node *env_list);
 
-
+//UTILS
 //utils.c
 int error_exit(char *s, int exit_status);
 char *protect(char *arg);
 char **argv_duplicate_without_program_name(char **argv, int argc);
 char **array_dup(char **env);
 
-
+//utils_list.c
+void    ft_lstadd_back_command(t_command *command_list, t_command *command);
+t_command   *ft_lstnew_command(char **dup, t_tools *tools);
 
 //BUILTINS
 //mini_cd.c
@@ -142,10 +146,9 @@ int mini_export(t_tools *tools, t_command *command);
 void    print_env_for_export(t_env_node *env_list);
 
 //builtin_utils.c
-void    ft_lstadd_back_command(t_command *command_list, t_command *command);
-t_command   *ft_lstnew_command(char **dup);
 int find_equal_sign(char *arg);
 int check_arg_digit(char *arg);
+void choose_builtin(t_tools *tools);
 
 
 //EXECUTE

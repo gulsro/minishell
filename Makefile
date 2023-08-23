@@ -26,8 +26,8 @@ LIBS	:= -lreadline
 LIBFT	:= libft/libft.a
 HEADERS := -I libft -I include
 SRCS 	:=	src/main.c \
-			src/test.c \
-			src/test_redirection.c \
+			src/test/test.c \
+			src/test/test_redirection.c \
 			src/env/env.c \
 			src/env/env_utils.c \
 			src/env/env_utils_2.c \
@@ -45,7 +45,8 @@ SRCS 	:=	src/main.c \
 			src/execute/execute_utils.c \
 			src/execute/handle_pipes.c \
 			src/expand/expand_dollar_sign.c \
-			src/utils/utils.c
+			src/utils/utils.c \
+			src/utils/utils_list.c
 
 #SRCS	:= ${SRCS:%=./src/%}
 OBJS	:= ${SRCS:.c=.o}
