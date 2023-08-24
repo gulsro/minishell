@@ -54,8 +54,7 @@ int check_redirection_exist(char **command_args)
 			|| ft_strsame(command_args[i], ">>") == 1
 			|| ft_strsame(command_args[i], "<<") == 1)
 		{
-			printf("B\n");
-			return (1);
+					return (1);
 		}
 		i++;
 	}
@@ -85,40 +84,12 @@ void decide_redirection_type(t_redirection *redirection)
 	}
 }
 
-//This func can misleads you if you have this:
-//./minishell echo <<den ----- that means you have command->args[0] and command->args[0].
-//So command->file_name is a part of command->args[0], this line *** gives you segfault
-// t_redirection *init_redirection(t_command *command)
-// {
-// 	t_redirection *redirection;
-
-// 	redirection = command->redirection;
-// 	if (check_redirection_exist(command) == 0)
-// 	{
-// 		redirection = NULL;
-// 		return (NULL);
-// 	}
-// 	redirection = (t_redirection *)malloc(sizeof(t_redirection));
-// 	if (redirection == NULL)
-// 		return (NULL);
-// 	//printf("A\n");
-// 	redirection->file_name = ft_strdup(command->args[2]); //***
-// 	//printf("B\n");
-// 	redirection->token_name = ft_strdup(command->args[1]);
-// 	//printf("token_type = %s\n", redirection->token_name);
-// 	//printf("C\n");
-// 	decide_redirection_type(redirection);
-// 	//printf("redir_type = %d\n", redirection->type);
-// 	//printf("D\n");
-// 	redirection->next = NULL;
-// 	return (redirection);
-// }
-
 t_redirection *init_redirection(t_command *command)
 {
 	t_redirection *redirection;
 
 	//redirection = command->redirection;
+//	printf("%s %s %s %s %s\n", command->args[0], command->args[1], command->args[2], command->args[3], command->args[4]);
 	if (check_redirection_exist(command->args) == 0)
 	{
 		redirection = NULL;

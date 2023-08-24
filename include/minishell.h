@@ -75,7 +75,7 @@ typedef struct s_env_node
 void    init_command_structure(int argc, char **argv, t_tools *tools);
 t_command *init_command_list(char *line, t_tools *tools);
 void    malloc_command_list_structure(t_tools *tools);
-char **copy_content_until_pipe(char **args, int pipe_index_position);
+char **copy_content_until_pipe(char **args, int *pipe_index_position);
 int count_pipes(char **argv);
 
 //test_redirection.c

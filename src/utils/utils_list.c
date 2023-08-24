@@ -67,14 +67,13 @@ t_command	*ft_lstnew_command(char **dup, t_tools *tools)
 	//printf("1i = %d\n", i);
 	while (temp_args[i] != NULL)
 	{
-		//printf("%s\n", temp_args[i]);
-	//	printf("2i = %d\n", i);
 		printf("1pipe = %d\n", pipe_index_position);
-		command->args = copy_content_until_pipe(temp_args, pipe_index_position); //MALLOC
+	//	printf("%s %s %s %s %s\n", temp_args[0], temp_args[1], temp_args[2], temp_args[3], temp_args[4]);
+
+		command->args = copy_content_until_pipe(temp_args, &pipe_index_position); //MALLOC
 		printf("%s\n%s\n%s\n%s\n", command->args[0], command->args[1],command->args[2],command->args[3]);  
 		if (command->args == NULL)
 			return (NULL);
-	//	printf("3i = %d\n", i);
 		printf("2pipe = %d\n", pipe_index_position);
 		command->redirection = init_redirection(command);
 		if (ft_strsame(temp_args[i], "|") == 1)
