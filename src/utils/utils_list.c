@@ -47,7 +47,7 @@ t_command	*ft_lstnew_command(char **dup, t_tools *tools)
 	t_command	*command;
 	char **temp_args;
 	int i;
-	static int pipe_index_position;
+	static int *pipe_index_position;
 
 	i = 0;
 	temp_args = array_dup(dup);
@@ -57,38 +57,57 @@ t_command	*ft_lstnew_command(char **dup, t_tools *tools)
 	tools->command_list = command;
 	if (count_pipes(temp_args) == 0)
 	{
-		command->args = temp_args; //MALLOC
-		if (command->args == NULL)
-		return NULL;
-		command->redirection = init_redirection(command);
-		command->next = NULL;
+		command = init_single_command(tools, temp_args);
 		return (command);
 	}
 	//printf("1i = %d\n", i);
+	pipe_index_position = malloc(sizeof(int));
+	if (pipe_index_position == NULL)
+		return (NULL);
+//	printf("malloced pipe = %d\n", *pipe_index_position);
 	while (temp_args[i] != NULL)
 	{
-		printf("1pipe = %d\n", pipe_index_position);
+		printf("1pipe = %d\n", *pipe_index_position);
 	//	printf("%s %s %s %s %s\n", temp_args[0], temp_args[1], temp_args[2], temp_args[3], temp_args[4]);
 
-		command->args = copy_content_until_pipe(temp_args, &pipe_index_position); //MALLOC
-		printf("%s\n%s\n%s\n%s\n", command->args[0], command->args[1],command->args[2],command->args[3]);  
+		command->args = copy_content_until_pipe(temp_args, pipe_index_position); //MALLOC
+		(*pipe_index_position)++;
+		printf("%s\n%s\n", command->args[0], command->args[1]);  
 		if (command->args == NULL)
 			return (NULL);
-		printf("2pipe = %d\n", pipe_index_position);
+	//	printf("2pipe = %d\n", *pipe_index_position);
 		command->redirection = init_redirection(command);
-		if (ft_strsame(temp_args[i], "|") == 1)
+		while (ft_strsame(temp_args[i], "|") == 0)
 		{
 			i++;
-			command->next = (t_command *)malloc(sizeof(t_command));
-			if (command->next == NULL)
-				return (NULL);
-			command = command->next;
+		//	printf("i = %d\n", i);
+			if (temp_args[i] != NULL && ft_strsame(temp_args[i], "|") == 1)
+			{
+				i++;
+				command->next = (t_command *)malloc(sizeof(t_command));
+				if (command->next == NULL)
+					return (NULL);
+				command = command->next;
+				break ;
+			}
 		}
 	}
 	command = tools->command_list;
 	return (command);
 }
 
+t_command *init_single_command(t_tools *tools, char **temp_args)
+{
+	t_command *command;
+
+	command = tools->command_list;
+	command->args = temp_args; //MALLOC
+	if (command->args == NULL)
+		return NULL;
+	command->redirection = init_redirection(command);
+	command->next = NULL;
+	return (command);
+}
 // void create_command_list(t_command *command_list, t_command *command)
 // {
 // 	t_command	*command;

@@ -88,10 +88,11 @@ char **copy_content_until_pipe(char **args, int *pipe_index_position)
 //	printf("copy pipe = %d\n", pipe_index_position);
 	i = *pipe_index_position;
 	number_of_commands = count_args_in_command(args);
-	str_arr = (char **)malloc(sizeof(char *) * number_of_commands);
+	//printf("arg number = %d\n", number_of_commands);
+	str_arr = (char **)malloc(sizeof(char *) * (number_of_commands + 1));
 	if (str_arr == NULL)
 		return (NULL);
-	while (args[i] != NULL)
+	while (args[i] != NULL && i < number_of_commands)
 	{
 		str_arr[i] = ft_strdup(args[i]); //MALLOC
 		i++;
@@ -99,9 +100,9 @@ char **copy_content_until_pipe(char **args, int *pipe_index_position)
 			break ;
 	}
 	str_arr[i] = NULL;
-	pipe_index_position = &i; //next time start copy one index after "|"
-	printf("%s\n%s\ni = %d\n", str_arr[0], str_arr[1], i);
-	printf("pipe index = %d\n", *pipe_index_position);
+	*pipe_index_position = i; //next time start copy one index after "|"
+	//printf("%s\n%s\ni = %d\n", str_arr[0], str_arr[1], i);
+	//printf("pipe index = %d\n", *pipe_index_position);
 	return (str_arr);
 }
 
