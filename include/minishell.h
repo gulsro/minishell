@@ -77,6 +77,8 @@ t_command *init_command_list(char *line, t_tools *tools);
 void    malloc_command_list_structure(t_tools *tools);
 char **copy_content_until_pipe(char **args, int *pipe_index_position);
 int count_pipes(char **argv);
+int count_args_until_pipe(char **args, int i);
+int count_args(char **args);
 
 //test_redirection.c
 //int check_redirection_exist(t_command *command);
@@ -175,6 +177,8 @@ int execute_single_command(t_tools *tools, t_command *command);
 //handle_pipes.c
 void handle_pipes(t_tools *tools);
 int single_execution_in_pipe(t_tools *tools, t_command *command, int fd_input, int fd[]);
+int last_command_execution(t_tools * tools, t_command *command, int fd_input, int fd[]);
+
 
 
 //EXPAND

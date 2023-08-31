@@ -56,7 +56,6 @@ void execute(t_tools *tools)
 	}
 	else
 	{
-		printf("A\n");
 		handle_pipes(tools);
 		//printf("here pipes need to be execute()\n");
 		return ;

@@ -47,9 +47,12 @@ t_command	*ft_lstnew_command(char **dup, t_tools *tools)
 	t_command	*command;
 	char **temp_args;
 	int i;
+	int number_of_commands_total;
 	static int *pipe_index_position;
 
 	i = 0;
+	number_of_commands_total = count_args(dup);
+//	printf("commands = %d\n", number_of_commands_total);
 	temp_args = array_dup(dup);
 	command = (t_command *)malloc(sizeof(t_command));
 	if (command == NULL)
@@ -65,33 +68,31 @@ t_command	*ft_lstnew_command(char **dup, t_tools *tools)
 	if (pipe_index_position == NULL)
 		return (NULL);
 //	printf("malloced pipe = %d\n", *pipe_index_position);
-	while (temp_args[i] != NULL)
+	while (temp_args[i] != NULL && i < number_of_commands_total)
 	{
-		printf("1pipe = %d\n", *pipe_index_position);
+	//	printf("1pipe = %d\n", *pipe_index_position);
 	//	printf("%s %s %s %s %s\n", temp_args[0], temp_args[1], temp_args[2], temp_args[3], temp_args[4]);
-
+		*pipe_index_position = i;
+		//printf("1pipe = %d\n", *pipe_index_position);
 		command->args = copy_content_until_pipe(temp_args, pipe_index_position); //MALLOC
-		(*pipe_index_position)++;
-		printf("%s\n%s\n", command->args[0], command->args[1]);  
+		i = *pipe_index_position;
+	//	printf("%s\n%s\ni = %d\n", command->args[0], command->args[1], i);  
 		if (command->args == NULL)
 			return (NULL);
 	//	printf("2pipe = %d\n", *pipe_index_position);
 		command->redirection = init_redirection(command);
-		while (ft_strsame(temp_args[i], "|") == 0)
+		//printf("temp = %s\n", temp_args[i]);
+		if (temp_args[i] != NULL && ft_strsame(temp_args[i], "|") == 1)
 		{
-			i++;
-		//	printf("i = %d\n", i);
-			if (temp_args[i] != NULL && ft_strsame(temp_args[i], "|") == 1)
-			{
-				i++;
-				command->next = (t_command *)malloc(sizeof(t_command));
-				if (command->next == NULL)
-					return (NULL);
-				command = command->next;
-				break ;
-			}
+			command->next = (t_command *)malloc(sizeof(t_command));
+			if (command->next == NULL)
+				return (NULL);
+		//	printf("temp = %s\n", temp_args[i]);
+			command = command->next;
 		}
+		i++;
 	}
+	command->next = NULL;
 	command = tools->command_list;
 	return (command);
 }

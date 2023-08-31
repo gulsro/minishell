@@ -56,17 +56,17 @@ t_command *init_command_list(char *line, t_tools *tools)
 	// 	printf("%s\n", split_line[i]);
 	// }
 	//printf("%s\n%s\n%s\n%s\n", split_line[0], split_line[1], split_line[2], split_line[3]);
+	tools->number_of_pipes = count_pipes(split_line);
+//	printf("pipes= %d\n", tools->number_of_pipes);
 	command_list = ft_lstnew_command(split_line, tools);
-	//printf("%s\n", command_list->args[0]);
+//	printf("%s %s %s %s\n", command_list->args[0], command_list->args[1], command_list->next->args[0], command_list->next->args[1]);//, command_list->next->next->args[0]);
 	return (command_list);
 }
 
-static int count_args_in_command(char **args)
+int count_args_until_pipe(char **args, int i)
 {
-	int i;
 	int count;
 	
-	i = 0;
 	count = 0;
 	while (args[i] != NULL)
 	{
@@ -82,26 +82,31 @@ static int count_args_in_command(char **args)
 char **copy_content_until_pipe(char **args, int *pipe_index_position)
 {
 	int i;
+	int j;
 	int number_of_commands;
 	char **str_arr;
 
-//	printf("copy pipe = %d\n", pipe_index_position);
 	i = *pipe_index_position;
-	number_of_commands = count_args_in_command(args);
+	j = 0;
+	number_of_commands = count_args_until_pipe(args, i);
 	//printf("arg number = %d\n", number_of_commands);
 	str_arr = (char **)malloc(sizeof(char *) * (number_of_commands + 1));
+	//printf("copy_content i = %d\n", i);
 	if (str_arr == NULL)
 		return (NULL);
-	while (args[i] != NULL && i < number_of_commands)
+	while (args[i] != NULL && j < number_of_commands)
 	{
-		str_arr[i] = ft_strdup(args[i]); //MALLOC
+		str_arr[j] = ft_strdup(args[i]); //MALLOC
 		i++;
-		if (ft_strsame(args[i], "|") == 1)
+		j++;
+		if (args[i] == NULL || ft_strsame(args[i], "|") == 1)
+		{
 			break ;
+		}
 	}
-	str_arr[i] = NULL;
+	str_arr[j] = NULL;
 	*pipe_index_position = i; //next time start copy one index after "|"
-	//printf("%s\n%s\ni = %d\n", str_arr[0], str_arr[1], i);
+//	printf("%s\n%s\ni = %d j = %d\n", str_arr[0], str_arr[1], i, j);
 	//printf("pipe index = %d\n", *pipe_index_position);
 	return (str_arr);
 }
@@ -120,6 +125,19 @@ int count_pipes(char **argv)
 		i++;
 	}
 	return (count);
+}
+
+int count_args(char **args)
+{
+	int i;
+
+	i = 0;
+	while (args[i] != NULL)
+	{
+		i++;
+	}
+	return (i);
+
 }
 
 //TEST 
