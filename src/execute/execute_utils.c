@@ -19,9 +19,7 @@ char **get_paths(t_tools *tools)
 {
 	char **path_arr;
 	char *path_str;
-	int i;
 
-	i = 0;
 	path_str = get_value_from_env_node("PATH", tools->env_list); //MALLOC
 	if (path_str == NULL)
 		return(ft_putendl_fd("Path can not be found", STDERR_FILENO), NULL);

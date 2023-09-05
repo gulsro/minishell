@@ -13,11 +13,9 @@ int check_first_char_dollar(char *string)
 */
 char *expand_string(char *string, t_tools *tools)
 {
-	t_command	*command;
 	t_env_node	*temp;
 	char		*return_val;
 
-	command = tools->command_list;
 	if (ft_strsame(string, "$?") == 1)
 	{
 		return_val = ft_itoa(glob_exit_status); //MALLOCCC
