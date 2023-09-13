@@ -38,13 +38,14 @@ static void shell_loop(t_tools *tools)
 
 	while (1)
 	{
+		//init_signals();
 		line = readline("\033[0;35m----->\033[1;36mMINISHELL&: \033[1;33m"); //caller must free it when finished
 		//check if input == NULL>> doesnt go to history
 		if (line == NULL) // means it encounters EOF, ctrl-D
 		{
 			free(line);
 			error_exit("bad user input", 1); //??
-		}	
+		}
 		else if (line[0] != '\0')
 		{
 			tools->input = line;
@@ -76,7 +77,6 @@ int main(int argc, char **argv, char **env)
 	// 	printf("ERROR, argc = 1");
 	// }
 	tools = init_tools(argc, argv, env);
-	//handle signals();
 	//tools->env_list = init_env_linked_list(env);
 	//env_list_print(tools->env_list); //works until here
 	//init_command_structure(argv, argc, tools);
