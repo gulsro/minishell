@@ -26,6 +26,7 @@ static t_tools *init_tools(int argc, char **argv, char **env)
 	tools->input = NULL;
 	tools->env = array_dup(env); //MALLOC
 	tools->env_list = init_env_linked_list(env);
+	tools->interactive = 1;
 	//init_command_structure(argc, argv, tools);
 	// tools->number_of_pipes = count_pipes(argv);
 	// printf("pipes= %d\n", tools->number_of_pipes);

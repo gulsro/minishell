@@ -22,7 +22,7 @@ void execute_without_pipe(t_tools *tools)
 	t_command *command;
 	int exit_code;
 	pid_t p1;
-	
+
 	command = tools->command_list;
 	p1 = fork();
 	if (p1 == -1)
