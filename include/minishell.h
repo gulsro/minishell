@@ -15,6 +15,7 @@
 
 extern int glob_exit_status; //with extern, we declare glob_exit_status without defining
 //we ll define it later in the program
+int signal_flag = 0;
 
 typedef enum s_token_type
 {

@@ -37,7 +37,7 @@ static void shell_loop(t_tools *tools)
 {
 	char *line;
 
-	while (1)
+	while (signal_flag == 0)
 	{
 		//init_signals();
 		line = readline("\033[0;35m----->\033[1;36mMINISHELL&: \033[1;33m"); //caller must free it when finished
