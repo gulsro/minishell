@@ -15,7 +15,7 @@
 
 extern int glob_exit_status; //with extern, we declare glob_exit_status without defining
 //we ll define it later in the program
-int signal_flag = 0;
+extern int signal_flag;
 
 typedef enum s_token_type
 {
@@ -59,6 +59,7 @@ typedef struct s_tools
     char **env;
     struct s_env_node *env_list;
     t_command *command_list;
+    pid_t pid;
     int number_of_pipes; //this +1 will give us number of command we have in command_list
     int interactive; //it s usually set to 1, if you read heredoc,script>> must be 0(for signals)
 }t_tools;
@@ -183,13 +184,15 @@ int single_execution_in_pipe(t_tools *tools, t_command *command, int fd_input, i
 int last_command_execution(t_tools * tools, t_command *command, int fd_input, int fd[]);
 
 
-
 //EXPAND
 //expand_dollar_sign.c
 int check_first_char_dollar(char *string);
 char *expand_string(char *string, t_tools *tools);
 
 
+//SIGNALS
+int init_signal(void);
+void signal_handler(int signum);
 
 
 

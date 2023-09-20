@@ -46,7 +46,8 @@ SRCS 	:=	src/main.c \
 			src/execute/handle_pipes.c \
 			src/expand/expand_dollar_sign.c \
 			src/utils/utils.c \
-			src/utils/utils_list.c
+			src/utils/utils_list.c \
+			src/signals/signals.c
 
 #SRCS	:= ${SRCS:%=./src/%}
 OBJS	:= ${SRCS:.c=.o}
